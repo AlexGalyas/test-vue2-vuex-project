@@ -1,0 +1,17 @@
+
+ weekDates() {
+        const today = new Date();
+        const monday = new Date(today);
+        const dayOfWeek = today.getDay(); // 0 (неділя) до 6 (субота)
+        const diff = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1); // Для неділі -6, для інших днів тижня 1
+        monday.setDate(diff);
+
+        const weekDates = [];
+        console.log(weekDates)
+        for (let i = 0; i < 7; i++) {
+            const date = new Date(monday);
+            date.setDate(monday.getDate() + i);
+            weekDates.push(date.toISOString().split('T')[0]);
+        }
+        return weekDates;
+    }
