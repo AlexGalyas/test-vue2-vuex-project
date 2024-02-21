@@ -4,31 +4,49 @@
             "roomIndex": 0, 
             "startDate": "2024-02-20", 
             "endDate": "2024-02-22", 
-            "clientName": "John Doe" 
+            "clientName": "John Doe" ,
+            "telephone":"1234565678",
+            "email":"some@some.com"
         },
         { 
             "roomIndex": 1, 
             "startDate": "2024-02-21", 
             "endDate": "2024-02-22", 
-            "clientName": "Alexander Mahon" 
+            "clientName": "Alexander Mahon" ,
+            "telephone":"1234565678",
+            "email":"some@some.com"
         },
         { 
             "roomIndex": 1, 
             "startDate": "2024-02-24", 
             "endDate": "2024-02-25", 
-            "clientName": "Michael Scofield" 
+            "clientName": "Michael Scofield" ,
+            "telephone":"1234565678",
+            "email":"some@some.com"
         },
         { 
             "roomIndex": 3, 
             "startDate": "2024-02-19", 
             "endDate": "2024-02-24", 
-            "clientName": "Peter Parker" 
+            "clientName": "Peter Parker" ,
+            "telephone":"1234565678",
+            "email":"some@some.com"
         },
         { 
             "roomIndex": 2, 
             "startDate": "2024-02-21", 
             "endDate": "2024-02-23", 
-            "clientName": "Jon Jones" 
+            "clientName": "Jon Jones" ,
+            "telephone":"1234565678",
+            "email":"some@some.com"
+        },
+        { 
+            "roomIndex": 4, 
+            "startDate": "2024-02-23", 
+            "endDate": "2024-02-24", 
+            "clientName": "Asia" ,
+            "telephone":"123409876",
+            "email":"asia@gmail.com"
         }
     ],
     "rooms":[

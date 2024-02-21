@@ -1,38 +1,61 @@
 <template>
   <div class="container">
     <ButtonsComponent/>
-    <table class="calendar" border='1'>
-		<thead>
-			<tr>
-			<th></th>
-			<th v-for="date in weekDates" :key="date">{{ date }}</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr v-for="(room, index) in rooms" :key="index">
-				<td class="room__type">{{ room.type }}</td>
-				<td class="reservation__container" v-for="(date) in weekDates" :key="`${date}-${room.type}`" :colspan="getSpan(index, date)" >
-					<template v-if="isBooking(index, date)">
-					<div
-						class="reservation"
-					>
-						{{ getReservationClient(index, date) }}
-					</div>
-					</template>
-				</td>
-			</tr>
-		</tbody>
-    </table>
+    <div class="calendar__container" style="position:relative;">
+      <table class="calendar" border='1'>
+        <thead>
+          <tr>
+          <th></th>
+          <th v-for="date in weekDates" :key="date">{{ date }}</th>
+          </tr>
+        </thead>
+        <tbody style="position:relative;">
+          <tr style="position:relative;" v-for="(room, index) in rooms" :key="index">
+            
+            <td class="room__type">{{ room.type }}</td>
+            
+            <td 
+                v-for="(date,dateIndex) in weekDates" 
+                :key="`${date}-${room.type}`"
+                
+              >
+              <div class="reservation__container" @click="showPopup(index, date)" >
+                <div
+                  v-if="isBooking(index, date) && getReservationIndex(index,date) === dateIndex"
+                  class="reservation"
+                  :style="{ width: getReservationWidth(index, date) }"
+                >
+                  {{ getReservationClient(index, date) }}
+                </div>
+              </div>
+            </td>
+            
+          </tr>
+        <PopupMenu :reservationData="activeReservation" v-if="activeReservation" @close="closePopup" />
+          
+        </tbody>
+
+      </table>
+      
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import ButtonsComponent from './ButtonsComponent.vue'
+import PopupMenu from './PopupMenu.vue';
 
 export default {
   components:{
-    ButtonsComponent
+    ButtonsComponent,
+    PopupMenu
+  },
+  data() {
+    return {
+      activeReservation: null,
+
+    };
   },
   computed: {
     ...mapGetters(['currentWeek','reservations','rooms']),
@@ -56,11 +79,13 @@ export default {
   methods: {
     ...mapActions(['fetchReservations','fetchRooms']),
     isBooking(roomIndex, currentDate) {
-      return this.reservations.some(reservation =>
+      const reservation = this.reservations.some(reservation =>
         reservation.roomIndex === roomIndex &&
         currentDate >= reservation.startDate &&
         currentDate <= reservation.endDate
+        
       )
+      return reservation;
     },
     getReservationClient(roomIndex, currentDate) {
       const reservation = this.reservations.find(reservation =>
@@ -68,25 +93,61 @@ export default {
         currentDate >= reservation.startDate &&
         currentDate <= reservation.endDate
       );
+      if (reservation) {
+        const start = new Date(reservation.startDate);
+        const index = this.calculateCellIndex(this.weekDates[0], start.toISOString().split('T')[0]);
+        console.log("Індекс початку резервації:", index);
+      }
       return reservation ? reservation.clientName : '';
     },
-	getSpan(roomIndex, startDate) {
-		const booking = this.reservations.find(
-			reservation =>
-			reservation.roomIndex === roomIndex &&
-			startDate >= reservation.startDate &&
-			startDate <= reservation.endDate
-		);
-		if (booking) {
-			const start = new Date(booking.startDate);
-			const end = new Date(booking.endDate);
-			const diffTime = Math.abs(end - start);
-			const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-			// Повертаємо кількість днів, на які триває бронювання
-			return diffDays;
-		}
-		return 1; // Якщо бронювання не знайдено, повертаємо 1
-	}
+    getReservationWidth(roomIndex, currentDate) {
+      const reservation = this.reservations.find(reservation =>
+        reservation.roomIndex === roomIndex &&
+        currentDate >= reservation.startDate &&
+        currentDate <= reservation.endDate
+      );
+      if (reservation) {
+        const start = new Date(reservation.startDate);
+        const end = new Date(reservation.endDate);
+        const diffInDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
+        return `${diffInDays * 100}%`;
+      }
+      return '0%';
+    },
+    showPopup(roomIndex, currentDate) {
+      this.activeReservation = this.reservations.find(reservation =>
+        reservation.roomIndex === roomIndex &&
+        currentDate >= reservation.startDate &&
+        currentDate <= reservation.endDate
+      );
+    },
+    closePopup() {
+      this.activeReservation = null;
+    },
+    calculateCellIndex(startDate, reservationDate) {
+      const start = new Date(startDate);
+      const current = new Date(reservationDate);
+
+      const diffTime = Math.abs(current - start);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      return diffDays;
+    },
+    getReservationIndex(roomIndex, currentDate) {
+      const reservation = this.reservations.find(reservation =>
+        reservation.roomIndex === roomIndex &&
+        currentDate >= reservation.startDate &&
+        currentDate <= reservation.endDate
+      );
+      if (reservation) {
+        const start = new Date(reservation.startDate);
+        console.log(start)
+        const index = this.calculateCellIndex(this.weekDates[0], start.toISOString().split('T')[0]);
+        return index
+      }
+      return 0
+    },
+
   }
 };
 </script>
@@ -98,12 +159,16 @@ export default {
         border:1px;
         margin:0 auto;
     }   
+    .calendar__container{
+      width:100%;
+    }
     .calendar thead th{
-        padding:10px;
+        padding:20px;
     }
 
     .calendar tbody td{
-        padding:30px;
+        padding:40px;
+        position: relative;
     }
     .room__type{
       color:skyblue;
@@ -111,22 +176,24 @@ export default {
       font-style:italic;
     }
     .reservation__container{
-      position:relative;
-    }
-    .reservation {
-      background:#5cb85c;
       position:absolute;
       bottom:0;
       left:0;
+      width: 100%;
+      height: 100%;
+    }
+    .reservation {
+      position: absolute;
+      bottom:0;
+      border-radius:1rem;
+      background:#F6D776;
       color:#fff;
       width: 100%;
-      height: 80%;
+      height: 70%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 0.8rem;
       overflow: hidden;
-    }
-
-    
+    }   
 </style>
