@@ -14,15 +14,6 @@ export default new Vuex.Store({
     setCurrentWeek(state, newDate) {
       state.currentWeek = newDate;
     },
-    addReservation(state, reservation) {
-      state.reservations.push(reservation);
-    },
-    removeReservation(state, index) {
-      state.reservations.splice(index, 1);
-    },
-    updateReservation(state, { index, reservation }) {
-      state.reservations[index] = reservation;
-    },
     setReservations(state, reservations) {
       state.reservations = reservations;
     },

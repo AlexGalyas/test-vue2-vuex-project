@@ -42,6 +42,7 @@ export default {
         box-shadow: 0px -5px 20px rgba(0, 0, 0, 0.3);
         top:10px;
         right:10px;
+        z-index: 2;
     }
     .close{
         border:1px solid skyblue;
