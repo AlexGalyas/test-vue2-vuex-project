@@ -1,15 +1,33 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import axios from 'axios';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     currentWeek: new Date(),
+    reservations: [],
+    rooms:[]
   },
   mutations: {
     setCurrentWeek(state, newDate) {
       state.currentWeek = newDate;
+    },
+    addReservation(state, reservation) {
+      state.reservations.push(reservation);
+    },
+    removeReservation(state, index) {
+      state.reservations.splice(index, 1);
+    },
+    updateReservation(state, { index, reservation }) {
+      state.reservations[index] = reservation;
+    },
+    setReservations(state, reservations) {
+      state.reservations = reservations;
+    },
+    setRooms(state, rooms) {
+      state.rooms = rooms;
     },
   },
   actions: {
@@ -25,9 +43,27 @@ export default new Vuex.Store({
     },
     resetToCurrentWeek({ commit }) {
       commit('setCurrentWeek', new Date());
-    }
+    },
+    async fetchReservations({ commit }) {
+      try {
+        const response = await axios.get('http://localhost:3000/reservations'); 
+        commit('setReservations', response.data);
+      } catch (error) {
+        console.error('Error fetching reservations:', error);
+      }
+    },
+    async fetchRooms({ commit }) {
+      try {
+        const response = await axios.get('http://localhost:3000/rooms'); 
+        commit('setRooms', response.data);
+      } catch (error) {
+        console.error('Error fetching rooms:', error);
+      }
+    },
   },
   getters: {
     currentWeek: state => state.currentWeek,
+    reservations: state => state.reservations,
+    rooms:state => state.rooms
   },
 });
