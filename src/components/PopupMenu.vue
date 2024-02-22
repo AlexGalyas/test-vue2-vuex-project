@@ -2,14 +2,13 @@
     <div class="reservation-popup">
       <div class="reservation-popup-content">
         
-        <h2>{{ reservationData.clientName }}</h2>
+        <h2>{{ reservationData.client }}</h2>
         <p><strong>Contact:</strong> {{ reservationData.telephone }}</p>
         <p><strong>Email:</strong> {{ reservationData.email }}</p>
         <hr class="line">
-        <p><strong>Start Date:</strong> {{ reservationData.startDate }}</p>
-        <p><strong>End Date:</strong> {{ reservationData.endDate }}</p>
-        <button class="close" @click="closePopup">Close</button>
-        <!-- Add other reservation data you want to display -->
+        <p><strong>Start Date:</strong> {{ reservationData.start }}</p>
+        <p><strong>End Date:</strong> {{ reservationData.end }}</p>
+        <button class="close" v-on:click="closePopup">Close</button>
       </div>
     </div>
   </template>
@@ -33,6 +32,8 @@ export default {
 <style>
     .reservation-popup{
         position: absolute;
+        left:50%;
+        transform: translateX(-50%);
         background:#fff;
         max-width: 300px;
         display: flex;
@@ -42,7 +43,7 @@ export default {
         box-shadow: 0px -5px 20px rgba(0, 0, 0, 0.3);
         top:10px;
         right:10px;
-        z-index: 2;
+        z-index: 999;
     }
     .close{
         border:1px solid skyblue;

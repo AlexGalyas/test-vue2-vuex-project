@@ -1,59 +1,69 @@
 {
-    "reservations":[
-        { 
-            "roomIndex": 0, 
-            "startDate": "2024-02-20", 
-            "endDate": "2024-02-22", 
-            "clientName": "Conor McGregor" ,
-            "telephone":"1234565678",
-            "email":"some@some.com"
-        },
-        { 
-            "roomIndex": 1, 
-            "startDate": "2024-02-21", 
-            "endDate": "2024-02-22", 
-            "clientName": "Ronnie Coleman" ,
-            "telephone":"1234565678",
-            "email":"some@some.com"
-        },
-        { 
-            "roomIndex": 1, 
-            "startDate": "2024-02-24", 
-            "endDate": "2024-02-25", 
-            "clientName": "Michael Scofield" ,
-            "telephone":"1234565678",
-            "email":"some@some.com"
-        },
-        { 
-            "roomIndex": 3, 
-            "startDate": "2024-02-19", 
-            "endDate": "2024-02-24", 
-            "clientName": "Peter Parker" ,
-            "telephone":"1234565678",
-            "email":"some@some.com"
-        },
-        { 
-            "roomIndex": 2, 
-            "startDate": "2024-02-21", 
-            "endDate": "2024-02-23", 
-            "clientName": "Jon Jones" ,
-            "telephone":"1234565678",
-            "email":"some@some.com"
-        },
-        { 
-            "roomIndex": 2, 
-            "startDate": "2024-02-25", 
-            "endDate": "2024-02-27", 
-            "clientName": "Asia" ,
-            "telephone":"123409876",
-            "email":"asia@gmail.com"
-        }
-    ],
     "rooms":[
-        { "type": "Econom" },
-        { "type": "Classic" },
-        { "type": "Lux" },
-        { "type": "Premium" },
-        { "type": "President" }
+        { 
+            "type": "Econom",
+            "reservations": [
+                { 
+                    "start": "2024-02-21", 
+                    "end": "2024-02-22", 
+                    "client": "Conor McGregor" ,
+                    "telephone":"1234565678",
+                    "email":"some@some.com"
+                },
+                { 
+                    "start": "2024-02-22", 
+                    "end" : "2024-02-23", 
+                    "client": "Alice Smith",
+                    "telephone":"1234565678",
+                    "email":"some@some.com" 
+                }
+            ]
+        },
+        { 
+            "type": "Lux",
+            "reservations": [
+                { 
+                    "start": "2024-02-23", 
+                    "end": "2024-02-24", 
+                    "client": "Mike Tyson" ,
+                    "telephone":"1234565678",
+                    "email":"some@some.com"
+                },
+                { 
+                    "start": "2024-02-24", 
+                    "end" : "2024-02-27", 
+                    "client": "Marta Martins",
+                    "telephone":"1234565678",
+                    "email":"some@some.com" 
+                },
+                { 
+                    "start": "2024-02-27", 
+                    "end": "2024-02-28", 
+                    "client": "Peter Parker" ,
+                    "telephone":"1234565678",
+                    "email":"some@some.com"
+                }
+            ]
+        },
+        { 
+            "type": "President",
+            "reservations": [
+                
+                { 
+                    "start": "2024-02-19", 
+                    "end" : "2024-02-21", 
+                    "client": "Jon Jones",
+                    "telephone":"1234565678",
+                    "email":"some@some.com" 
+                },
+                { 
+                    "start": "2024-02-21", 
+                    "end": "2024-02-22", 
+                    "client": "Soap Mactavish" ,
+                    "telephone":"1234565678",
+                    "email":"some@some.com"
+                }
+            ]
+        }
     ]
 }
