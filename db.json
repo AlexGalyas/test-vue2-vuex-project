@@ -16,6 +16,13 @@
                     "client": "Alice Smith",
                     "telephone":"1234565678",
                     "email":"some@some.com" 
+                },
+                { 
+                    "start": "2024-02-25", 
+                    "end" : "2024-03-03", 
+                    "client": "Alice Smith",
+                    "telephone":"1234565678",
+                    "email":"some@some.com" 
                 }
             ]
         },

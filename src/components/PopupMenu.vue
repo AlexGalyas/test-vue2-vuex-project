@@ -2,9 +2,10 @@
     <div class="reservation-popup">
       <div class="reservation-popup-content">
         
-        <h2>{{ reservationData.client }}</h2>
-        <p><strong>Contact:</strong> {{ reservationData.telephone }}</p>
+        <h2>{{ reservationData.name }}</h2>
+        <p><strong>Contact:</strong> {{ reservationData.phone }}</p>
         <p><strong>Email:</strong> {{ reservationData.email }}</p>
+        <p>{{ reservationData.typeOfApartments }}</p>
         <hr class="line">
         <p><strong>Start Date:</strong> {{ reservationData.start }}</p>
         <p><strong>End Date:</strong> {{ reservationData.end }}</p>
@@ -23,7 +24,7 @@ export default {
     },
     methods: {
         closePopup() {
-        this.$emit('close');
+            this.$emit('close');
         },
     },
 };
